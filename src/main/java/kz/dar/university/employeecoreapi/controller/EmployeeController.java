@@ -1,6 +1,7 @@
 package kz.dar.university.employeecoreapi.controller;
 
-import kz.dar.university.employeecoreapi.model.EmployeeModel;
+import kz.dar.university.employeecoreapi.model.EmployeeRequest;
+import kz.dar.university.employeecoreapi.model.EmployeeResponse;
 import kz.dar.university.employeecoreapi.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -27,26 +28,28 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public void createEmployee(@RequestBody @Valid EmployeeModel employee) {
+    public EmployeeResponse createEmployee(@RequestBody @Valid EmployeeRequest employee) {
 
-        employeeService.createEmployee(employee);
+        return employeeService.createEmployee(employee);
 
     }
 
     @GetMapping("/all")
-    public List<EmployeeModel> getAllEmployees() {
+    public List<EmployeeResponse> getAllEmployees() {
 
         return employeeService.getAllEmployees();
 
     }
 
     @GetMapping
-    public EmployeeModel getEmployeeById(@RequestParam String employeeId) {
+    public EmployeeResponse getEmployeeById(@RequestParam String employeeId) {
+
         return employeeService.getEmployeeById(employeeId);
+
     }
 
     @PutMapping("/{employeeId}")
-    public void updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeModel employee) {
+    public void updateEmployee(@PathVariable String employeeId, @RequestBody EmployeeRequest employee) {
 
         employee.setEmployeeId(employeeId);
         employeeService.updateEmployee(employee);
